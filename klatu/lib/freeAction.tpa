@@ -33,7 +33,9 @@ BEGIN
 	LAF TRUNCATE_FILE STR_VAR file = EVAL ~%logFile%~ END	// reset log
 	
 	COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
-		LPF FA_REWRITE_MOVE_MODS INT_VAR abilLen = 0x38 END
+		PATCH_IF NOT(~%SOURCE_FILE%~ STR_EQ ~A7!EQMA.ITM~ OR ~%SOURCE_FILE%~ STR_EQ~!SAMAUNA.ITM~) BEGIN
+			LPF FA_REWRITE_MOVE_MODS INT_VAR abilLen = 0x38 END
+		END
 	BUT_ONLY
 	
 	COPY_EXISTING_REGEXP GLOB ~^.+\.spl$~ ~override~
@@ -52,7 +54,9 @@ BEGIN
 	// every positive/neutral movement rate bonus is now opcode 176
 	
 	COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
-		LPF FA_COMPLEMENT_FREE_ACTION INT_VAR abilLen = 0x38 STR_VAR logFile = EVAL ~%logFile%~ END
+		PATCH_IF NOT(~%SOURCE_FILE%~ STR_EQ ~A7!EQMA.ITM~ OR ~%SOURCE_FILE%~ STR_EQ~!SAMAUNA.ITM~) BEGIN
+			LPF FA_COMPLEMENT_FREE_ACTION INT_VAR abilLen = 0x38 STR_VAR logFile = EVAL ~%logFile%~ END
+		END
 	BUT_ONLY
 	
 	COPY_EXISTING_REGEXP GLOB ~^.+\.spl$~ ~override~

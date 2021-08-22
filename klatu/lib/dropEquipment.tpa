@@ -35,6 +35,7 @@ BEGIN
 		END
 	BUT_ONLY
 	COPY_EXISTING_REGEXP GLOB ~^.+\.itm$~ ~override~
+		PATCH_IF NOT(~%SOURCE_FILE%~ STR_EQ ~A7!EQMA.ITM~ OR ~%SOURCE_FILE%~ STR_EQ~!SAMAUNA.ITM~) BEGIN
 		LPF SANITIZE_ITM RET ok = ok END
 		PATCH_IF ok BEGIN
 			LPF DQ_COMPLEMENT_IMMUNITY
@@ -49,6 +50,7 @@ BEGIN
 						requiredDelay = requiredDelay
 				STR_VAR	drop = EVAL ~%dropRes%~
 			END
+		END
 		END
 	BUT_ONLY
 	COPY_EXISTING_REGEXP GLOB ~^.+\.cre$~ ~override~
