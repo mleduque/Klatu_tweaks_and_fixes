@@ -172,7 +172,8 @@ common.tpa
 			READ_LONG 0x6a fxOff
 			READ_SHORT 0x6e fxIdx
 			READ_SHORT 0x70 fxNum
-			PATCH_IF ((fxOff >= 0x72 AND fxOff <= off) AND (abilNum = 0 OR (abilOff >= 0x72 AND abilOff <= (off - abilNum * abilLen)))) BEGIN
+			endFx = fxOff + (fxIdx + fxNum) * 0x30
+			PATCH_IF ((fxOff >= 0x72 AND fxOff <= off) AND (abilNum = 0 OR (abilOff >= 0x72 AND abilOff <= (off - abilNum * abilLen))) AND (abilOff < endFx) ) BEGIN
 				abilSize = abilNum * abilLen
 				PATCH_IF (abilOff != 0x72) BEGIN
 					INSERT_BYTES 0x72 abilSize
